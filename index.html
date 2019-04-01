@@ -5,6 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
+    <style>
+      .slider {
+        overflow: hidden;
+        position: relative;
+      }
+      .slider .slider-pager {
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .slider .slider-pre {
+        position: absolute;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+      }
+      .slider .slider-next {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+      }
+      .slider ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        transition: transform 0.5s;
+      }
+      ul img {
+        vertical-align: top;
+      }
+    </style>
   </head>
   <body>
     <div class="slider">
