@@ -4,7 +4,10 @@ class Slider {
     this.element = document.querySelector(this.options.selector);
     this.init();
   }
+
+  //初始化轮播图
   init() {
+    //根据单个内容宽度设定容器宽度
     this.width = this.element.querySelector("li").clientWidth;
     this.length = this.element.querySelectorAll("li").length;
     this.element.style.width = this.width + "px";
@@ -16,11 +19,13 @@ class Slider {
       this.renderPager();
     }
     if (this.options.autoPlay) {
-      this.play();
+      this.autoPlay();
     }
   }
 
+  //渲染轮播页指示器
   renderPager() {
+    //渲染单个指示点，并绑定事件
     const renderItem = index => {
       const item = document.createElement("li");
       item.style.margin = "0 2px";
@@ -36,8 +41,10 @@ class Slider {
       pager.appendChild(renderItem(i));
     }
     this.element.appendChild(pager);
-    this.pagerRefresh();
+    this.pagerRefresh(); //首次渲染时激活active样式
   }
+
+  //根据currentIndex渲染被激活的指示点
   pagerRefresh() {
     if (!this.options.pager) return;
     const items = this.element.querySelector(".slider-pager").children;
@@ -46,6 +53,8 @@ class Slider {
     });
     items[this.currentIndex].classList.add("active");
   }
+
+  //渲染左右翻页器
   renderControls() {
     const preBtn = document.createElement("span");
     preBtn.setAttribute("class", "slider-pre");
@@ -58,9 +67,29 @@ class Slider {
     this.element.appendChild(preBtn);
     this.element.appendChild(nextBtn);
   }
-  play() {}
-  stop() {}
-  bindEvents() {}
+
+  //使用定时器自动播放
+  play() {
+    console.log("play");
+    this.timerID = setInterval(() => {
+      this.go(this.currentIndex + 1);
+    }, 2000);
+  }
+
+  //清除定时器，止自动播放
+  stop() {
+    console.log("stop");
+    clearInterval(this.timerID);
+  }
+
+  //自动播放
+  autoPlay() {
+    this.play();
+    this.element.addEventListener("mouseenter", () => this.stop());
+    this.element.addEventListener("mouseleave", () => this.play());
+  }
+
+  //核心方法，跳转至指定页数
   go(index) {
     length = this.length;
     index = index >= length ? 0 : index < 0 ? length - 1 : index; //判断跳转的位置是否超出范围（边缘处理）
@@ -75,7 +104,7 @@ class Slider {
 
 new Slider({
   selector: ".slider", //轮播组件的位置
-  autoPlay: false, //自动播放
+  autoPlay: true, //自动播放
   pager: true, //是否显示页面跳转指示器
   controls: true //是否显示上一页下一页控制器
 });
