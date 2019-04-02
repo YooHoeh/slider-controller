@@ -1,3 +1,6 @@
+/**
+ * 具有翻页器，页面指示器，自动播放功能的轮播图
+ */
 class Slider {
   constructor(options) {
     this.options = options;
@@ -54,15 +57,15 @@ class Slider {
     items[this.currentIndex].classList.add("active");
   }
 
-  //渲染左右翻页器
-  renderControls() {
+  //渲染左右翻页器,默认按钮为“<>”
+  renderControls(preDiv, nextDiv) {
     const preBtn = document.createElement("span");
     preBtn.setAttribute("class", "slider-pre");
-    preBtn.innerText = "<";
+    preBtn.innerText = preDiv || "<";
     preBtn.onclick = () => this.go(this.currentIndex - 1);
     const nextBtn = document.createElement("span");
     nextBtn.setAttribute("class", "slider-next");
-    nextBtn.innerText = ">";
+    nextBtn.innerText = nextDiv || ">";
     nextBtn.onclick = () => this.go(this.currentIndex + 1);
     this.element.appendChild(preBtn);
     this.element.appendChild(nextBtn);
