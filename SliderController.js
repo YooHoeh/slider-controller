@@ -19,11 +19,15 @@ class Slider {
       this.play();
     }
   }
+
   renderPager() {
     const renderItem = index => {
       const item = document.createElement("li");
-      item.innerText = "。";
-      item.onclick = () => this.go(index);
+      item.style.margin = "0 2px";
+      item.innerText = "_";
+      item.onclick = () => {
+        this.go(index);
+      };
       return item;
     };
     const pager = document.createElement("ul");
@@ -32,6 +36,15 @@ class Slider {
       pager.appendChild(renderItem(i));
     }
     this.element.appendChild(pager);
+    this.pagerRefresh();
+  }
+  pagerRefresh() {
+    if (!this.options.pager) return;
+    const items = this.element.querySelector(".slider-pager").children;
+    Array.prototype.forEach.call(items, i => {
+      i.classList.remove("active");
+    });
+    items[this.currentIndex].classList.add("active");
   }
   renderControls() {
     const preBtn = document.createElement("span");
@@ -56,6 +69,7 @@ class Slider {
       "ul"
     ).style.cssText = `transform:translateX(-${index * this.width}px)`;
     this.currentIndex = index;
+    this.pagerRefresh();
   }
 }
 
