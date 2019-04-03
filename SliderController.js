@@ -3,7 +3,13 @@
  */
 class Slider {
   constructor(options) {
-    this.options = options;
+    //默认设置
+    let defaultOptions = {
+      autoPlay: false, //自动播放
+      pager: true, //是否显示页面跳转指示器
+      controls: false //是否显示上一页下一页控制器
+    };
+    this.options = Object.assign({}, defaultOptions, options);
     this.element = document.querySelector(this.options.selector);
     this.init();
   }
